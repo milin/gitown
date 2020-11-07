@@ -5,7 +5,7 @@ import csv
 from invoke import run
 
 CODEOWNERS_FILE = 'CODEOWNERS'
-PERCENTAGE_THRESHOLD = 30
+PERCENTAGE_THRESHOLD = 5
 
 COMMITTERS = {
     'mshakya@tripadvisor.com': '@milind-shakya-sp',
@@ -44,7 +44,10 @@ class CodeOwnersUpdater:
     def check_files(self, files):
         codeowners_data = {}
         for file in files:
-            codeowners_data[file] = self.get_committers_for_file(file)
+            file_committers = self.get_committers_for_file(file)
+            # Some files may be not meet committer threshold, so we ignore those.
+            if file_committers:
+                codeowners_data[file] = file_committers
         for key, value in self.original_codeowner_data.items():
             self.updated_codeowner_data[key] = codeowners_data.get(key, value)
         for key, value in codeowners_data.items():
