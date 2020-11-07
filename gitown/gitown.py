@@ -51,7 +51,7 @@ class CodeOwnersUpdater:
 
     def update_file(self, updated_data):
         if updated_data != self.original_codeowner_data:
-            with open(CODEOWNERS_FILE, 'w', newline='') as csvfile:
+            with open(CODEOWNERS_FILE, 'w', newline='', encoding='utf-8') as csvfile:
                 csvfile.write("# Lines starting with '#' are comments.\n")
                 csvfile.write("# Each line is a file pattern followed by one or more owners.\n")
                 csvfile.write("# These owners will be the default owners for everything in the repo.\n")
@@ -60,7 +60,7 @@ class CodeOwnersUpdater:
                 csvfile.write("# Order is important. The last matching pattern has the most precedence.\n")
                 csvfile.write("\n")
 
-                writer = csv.writer(csvfile, delimiter=' ')
+                writer = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
                 for key, value in updated_data.items():
                     writer.writerow([key] + value)
             self.updated = True
