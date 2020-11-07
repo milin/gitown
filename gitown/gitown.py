@@ -5,7 +5,7 @@ import csv
 from invoke import run
 
 CODEOWNERS_FILE = 'CODEOWNERS'
-PERCENTAGE_THRESHOLD = 10
+PERCENTAGE_THRESHOLD = 30
 
 COMMITTERS = {
     'mshakya@tripadvisor.com': '@milind-shakya-sp',
@@ -85,7 +85,7 @@ class CodeOwnersUpdater:
         committer_line_frequency_map = {}
         for key, value in COMMITTERS.items():
             commiter_frequency = self.get_committer_line_frequency_percentage(key, filename)
-            committer_line_frequency_map[value] = commiter_frequency
+            committer_line_frequency_map[value] = committer_line_frequency_map.get(value, 0) + commiter_frequency
         return [
             a[0] for a in sorted(
                 committer_line_frequency_map.items(),
