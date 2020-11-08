@@ -10,7 +10,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+requirements = [
+    'pre-commit',
+    'invoke',
+    'simplejson'
+]
 
 setup_requirements = [ ]
 
@@ -32,11 +36,6 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="Keep your github CODEOWNERS file up to date.",
-    entry_points={
-        'console_scripts': [
-            'gitown=gitown.cli:main',
-        ],
-    },
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
@@ -49,5 +48,10 @@ setup(
     tests_require=test_requirements,
     url='https://github.com/milin/gitown',
     version='0.1.0',
+    entry_points={
+        'console_scripts': [
+            'gitown = gitown.gitown:main',
+        ]
+    },
     zip_safe=False,
 )

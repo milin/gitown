@@ -14,8 +14,6 @@ gitown
         :alt: Documentation Status
 
 
-
-
 Keep your github CODEOWNERS file up to date.
 
 
@@ -26,12 +24,34 @@ Keep your github CODEOWNERS file up to date.
 Features
 --------
 
-* TODO
+* Keep your github ``CODEOWNERS`` file up to date.
+* If a committer exceeds the ``ownership_threshold`` percentage in a file, then the committer is added to the ``CODEOWNERS`` file.
+* Default ``ownership_threshold`` is set to 25%. You can change it by passing ``--ownership_threshold``
+* Can be used as a ``pre-commit`` hook.
+* You need to create a gitownrc_ file and have a mapping of github emails to github usernames. gitown reads that file and only those users are considered to be added to the ``CODEOWNERS`` file.*
 
-Credits
--------
+It is best used along with pre-commit_. You can use it along with pre-commit by adding the following hook in your ``.pre-commit-config.yaml`` file.
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+::
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+    repos:
+    - repo:  https://github.com/milin/gitown
+      rev: v0.1.0
+      hooks:
+      - id:  gitown
+        args: ['--ownership_threshold=50', '--codeowners_filename=CODEOWNERS']  # Optional
+
+
+You need to have precommit setup to use this hook.
+--------------------------------------------------
+   Install Pre-commit and the commit-msg hook-type.
+
+
+   ::
+
+        pip install pre-commit
+        pre-commit install
+
+
+.. _pre-commit: https://pre-commit.com/
+.. _gitownrc: https://github.com/milin/gitown/blob/master/.gitownrc

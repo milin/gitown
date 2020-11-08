@@ -1,0 +1,8 @@
+# Example .gitownrc file.
+# This file should contain a json of github email and github username mapping of all committers
+# you want to gitown to manage so they can be automatically added to
+# CODEOWNERS file based on their ownership criteria.
+
+{
+    "committer@email.com": "committer_username"
+}
