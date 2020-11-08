@@ -1,0 +1,8 @@
+---
+- id: gitown
+  name: gitown
+  entry: gitown
+  language: python
+  stages: [commit]
+  description: Keep your CODEOWNERS file up to date to streamline code review process.
+
