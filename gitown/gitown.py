@@ -1,37 +1,34 @@
-import optparse
+import argparse
 from functools import lru_cache
 import sys
 import csv
+import pathlib
 from invoke import run
+import simplejson as json
 
-CODEOWNERS_FILE = 'CODEOWNERS'
-PERCENTAGE_THRESHOLD = 5
-
-COMMITTERS = {
-    'mshakya@tripadvisor.com': '@milind-shakya-sp',
-    'mshakya@singleplatform.com': '@milind-shakya-sp',
-    'sacharya@tripadvisor.com': '@sacharya-sp',
-    'dpanofsky@tripadvisor.com': '@davidpanofsky',
-    'dpanofsky@singleplatform.com': '@davidpanofsky',
-    'ytoruno@tripadvisor.com': '@ytorunoSP',
-    'ytoruno@singleplatform.com': '@ytorunoSP',
-    'gchen@tripadvisor.com': '@ta-gchen',
-    'krchen@tripadvisor.com': '@krchen-ta',
-    'micmartine@tripadvisor.com': '@sp-mmartin',
-    'mmartin@tripadvisor.com': '@sp-mmartin',
-}
-
+DEFAULT_CODEOWNERS_FILE = 'CODEOWNERS'
+DEFAULT_OWNERSHIP_THRESHOLD = 40
 
 cache = lru_cache(maxsize=None)
 
 
 class CodeOwnersUpdater:
-    def __init__(self):
+    def __init__(
+        self,
+        files,
+        owners,
+        ownership_threshold=DEFAULT_OWNERSHIP_THRESHOLD,
+        codeowners_filename=DEFAULT_CODEOWNERS_FILE
+    ):
+        self.files = files,
         self.original_codeowner_data = {}
         self.updated_codeowner_data = {}
         self.updated = False
+        self.owners = owners
+        self.ownership_threshold = ownership_threshold
+        self.codeowners_file = codeowners_filename
 
-        with open(CODEOWNERS_FILE, newline='') as csvfile:
+        with open(self.codeowners_file, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=' ')
             for row in reader:
                 try:
@@ -57,7 +54,7 @@ class CodeOwnersUpdater:
 
     def update_file(self, updated_data):
         if updated_data != self.original_codeowner_data:
-            with open(CODEOWNERS_FILE, 'w', newline='', encoding='utf-8') as csvfile:
+            with open(self.codeowners_file, 'w', newline='', encoding='utf-8') as csvfile:
                 csvfile.write("# Lines starting with '#' are comments.\n")
                 csvfile.write("# Each line is a file pattern followed by one or more owners.\n")
                 csvfile.write("# These owners will be the default owners for everything in the repo.\n")
@@ -86,30 +83,44 @@ class CodeOwnersUpdater:
         Returns a list of committers usernames sorted by blame frequency
         """
         committer_line_frequency_map = {}
-        for key, value in COMMITTERS.items():
+        for key, value in self.owners.items():
             commiter_frequency = self.get_committer_line_frequency_percentage(key, filename)
             committer_line_frequency_map[value] = committer_line_frequency_map.get(value, 0) + commiter_frequency
         return [
             a[0] for a in sorted(
                 committer_line_frequency_map.items(),
                 key=lambda item: item[1]
-            ) if a[1] > PERCENTAGE_THRESHOLD
+            ) if a[1] > self.ownership_threshold
         ]
 
     def main(self):
-        parser = optparse.OptionParser(
-            usage='%prog [options] file [files]',
-            description='Updates CODEOWNERS File'
-        )
-        (opts, files) = parser.parse_args()
-
-        if len(files) == 0:
+        if len(self.files) == 0:
             parser.error('No filenames provided')
 
-        self.check_files(files)
+        self.check_files(self.files)
         return 1 if self.updated else 0
 
 
 if __name__ == '__main__':
-    codeowners = CodeOwnersUpdater()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filenames', nargs='+')
+    parser.add_argument('--ownership_threshold')
+    parser.add_argument('--codeowners_filename')
+    args = parser.parse_args()
+    files = args.filenames[0]
+    ownership_threshold = args.ownership_threshold
+    codeowners_filename = args.codeowners_filename
+    try:
+        owners_raw = pathlib.Path('.gitownrc').read_text('utf-8')
+        owners = json.loads(owners_raw)
+    except FileNotFoundError as e:
+        message = "A .gitownrc file is required. Please see the github repo for details"
+        raise Exception(message).with_traceback(e.__traceback__)
+
+    codeowners = CodeOwnersUpdater(
+        files,
+        owners,
+        ownership_threshold=ownership_threshold or DEFAULT_OWNERSHIP_THRESHOLD,
+        codeowners_filename=codeowners_filename or DEFAULT_CODEOWNERS_FILE
+    )
     sys.exit(codeowners.main())
