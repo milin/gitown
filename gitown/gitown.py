@@ -94,14 +94,11 @@ class CodeOwnersUpdater:
         ]
 
     def main(self):
-        if len(self.files) == 0:
-            parser.error('No filenames provided')
-
         self.check_files(self.files)
         return 1 if self.updated else 0
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+')
     parser.add_argument('--ownership_threshold')
@@ -110,6 +107,9 @@ if __name__ == '__main__':
     files = args.filenames[0]
     ownership_threshold = args.ownership_threshold
     codeowners_filename = args.codeowners_filename
+
+    if len(files) == 0:
+        parser.error('No filenames provided')
     try:
         owners_raw = pathlib.Path('.gitownrc').read_text('utf-8')
         owners = json.loads(owners_raw)
@@ -123,4 +123,8 @@ if __name__ == '__main__':
         ownership_threshold=ownership_threshold or DEFAULT_OWNERSHIP_THRESHOLD,
         codeowners_filename=codeowners_filename or DEFAULT_CODEOWNERS_FILE
     )
-    sys.exit(codeowners.main())
+    codeowners.main()
+
+
+if __name__ == '__main__':
+    sys.exit(main())
