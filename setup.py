@@ -10,7 +10,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+requirements = [
+    'precommit',
+    'invoke',
+    'simplejson'
+]
 
 setup_requirements = [ ]
 
