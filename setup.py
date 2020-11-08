@@ -32,11 +32,6 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="Keep your github CODEOWNERS file up to date.",
-    entry_points={
-        'console_scripts': [
-            'gitown=gitown.cli:main',
-        ],
-    },
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
