@@ -62,7 +62,8 @@ class CodeOwnersUpdater:
                 csvfile.write("#\n")
                 csvfile.write("# Order is important. The last matching pattern has the most precedence.\n")
                 csvfile.write("\n")
-
+                csvfile.write("# This file is also being managed automatically by the gitown tool.\n")
+                
                 writer = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
                 for key, value in updated_data.items():
                     writer.writerow([key] + value)
