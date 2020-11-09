@@ -105,7 +105,7 @@ def main():
     parser.add_argument('--codeowners_filename')
     args = parser.parse_args()
     files = args.filenames[0]
-    ownership_threshold = int(args.ownership_threshold)
+    ownership_threshold = int(args.ownership_threshold or DEFAULT_OWNERSHIP_THRESHOLD)
     codeowners_filename = args.codeowners_filename
 
     if len(files) == 0:
@@ -120,7 +120,7 @@ def main():
     codeowners = CodeOwnersUpdater(
         files,
         owners,
-        ownership_threshold=ownership_threshold or DEFAULT_OWNERSHIP_THRESHOLD,
+        ownership_threshold=ownership_threshold,
         codeowners_filename=codeowners_filename or DEFAULT_CODEOWNERS_FILE
     )
     codeowners.main()
