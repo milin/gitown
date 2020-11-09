@@ -105,7 +105,7 @@ def main():
     parser.add_argument('--codeowners_filename')
     args = parser.parse_args()
     files = args.filenames[0]
-    ownership_threshold = args.ownership_threshold
+    ownership_threshold = int(args.ownership_threshold)
     codeowners_filename = args.codeowners_filename
 
     if len(files) == 0:
