@@ -24,7 +24,7 @@ Keep your github CODEOWNERS file up to date.
 Features
 --------
 
-* Keep your github ``CODEOWNERS`` file up to date.
+* Keep your github CODEOWNERS_ file up to date.
 * If a committer exceeds the ``ownership_threshold`` percentage in a file, then the committer is added to the ``CODEOWNERS`` file.
 * Default ``ownership_threshold`` is set to 25%. You can change it by passing ``--ownership_threshold``
 * Can be used as a ``pre-commit`` hook.
@@ -55,3 +55,4 @@ You need to have precommit setup to use this hook.
 
 .. _pre-commit: https://pre-commit.com/
 .. _gitownrc: https://github.com/milin/gitown/blob/master/.gitownrc
+.. _CODEOWNERS: https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-code-owners
