@@ -7,7 +7,7 @@ from invoke import run
 import simplejson as json
 
 DEFAULT_CODEOWNERS_FILE = 'CODEOWNERS'
-DEFAULT_OWNERSHIP_THRESHOLD = 40
+DEFAULT_OWNERSHIP_THRESHOLD = 25
 
 cache = lru_cache(maxsize=None)
 

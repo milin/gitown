@@ -25,6 +25,8 @@ Features
 --------
 
 * Keep your github CODEOWNERS file up to date.
+* If a committer exceeds the ownership_threshold percentage in a file, then the committer is added to the CODEOWNERS file.
+* Default `ownership_threshold` is set to 25%. You can change it by passing `--ownership_threshold`
 * Can be used as a precommit hook.
 * Looks at your changed files git blame and add committers who match the threshold set by you to add them to the CODEOWNERS file.
 * You need to create a `.gitownrc` file and have a mapping of github emails to github usernames. gitown reads that file and only those users are considered to be added to the CODEOWNERS file.
@@ -35,9 +37,9 @@ It is best used along with pre-commit_. You can use it along with pre-commit by 
 
     repos:
     - repo:  https://github.com/milin/gitown
-      rev: v1.0
+      sha: master
       hooks:
-      - id:  giticket
+      - id:  gitown
         args: ['--ownership_threshold=50', '--codeowners_filename=CODEOWNERS']  # Optional
 
 
@@ -54,11 +56,3 @@ You need to have precommit setup to use this hook.
 
 
 .. _pre-commit: https://pre-commit.com/
-
-Credits
--------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
