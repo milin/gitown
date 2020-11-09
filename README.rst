@@ -52,7 +52,6 @@ You need to have precommit setup to use this hook.
 
         pip install pre-commit==1.11.1
         pre-commit install
-        pre-commit install --hook-type commit-msg
 
 
 .. _pre-commit: https://pre-commit.com/
