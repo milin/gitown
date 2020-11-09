@@ -1,0 +1,6 @@
+repos:
+- repo:  https://github.com/milin/gitown
+  rev: v0.1.2
+  hooks:
+  - id:  gitown
+    args: ['--ownership_threshold=25', '--codeowners_filename=CODEOWNERS']
