@@ -28,7 +28,7 @@ class CodeOwnersUpdater:
         self.ownership_threshold = ownership_threshold
         self.codeowners_file = codeowners_filename
 
-        with open(self.codeowners_file,newline='') as csvfile:
+        with open(self.codeowners_file, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=' ')
             for row in reader:
                 try:
