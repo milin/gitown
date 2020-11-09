@@ -36,7 +36,7 @@ It is best used along with pre-commit_. You can use it along with pre-commit by 
 
     repos:
     - repo:  https://github.com/milin/gitown
-      rev: v0.1.0
+      rev: v0.1.1
       hooks:
       - id:  gitown
         args: ['--ownership_threshold=50', '--codeowners_filename=CODEOWNERS']  # Optional
