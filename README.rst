@@ -39,7 +39,7 @@ It is best used along with pre-commit_. You can use it along with pre-commit by 
       rev: v0.1.6
       hooks:
       - id:  gitown
-        args: ['--ownership_threshold=50', '--codeowners_filename=CODEOWNERS']  # Optional
+        args: ['--ownership_threshold=25', '--codeowners_filename=CODEOWNERS']  # Optional
 
 
 You need to have precommit setup to use this hook.
