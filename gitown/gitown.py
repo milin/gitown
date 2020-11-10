@@ -73,7 +73,10 @@ class CodeOwnersUpdater:
         blame_file_content = self.get_blame_file_content(filename)
         total_lines = blame_file_content.count('\n')
         total_lines_by_committer = blame_file_content.count(committer_email)
-        return (total_lines_by_committer / total_lines) * 100
+        frequency_percentage = 0
+        if total_lines:
+           return (total_lines_by_committer / total_lines) * 100
+        return frequency_percentage
 
     @cache
     def get_blame_file_content(self, filename):
