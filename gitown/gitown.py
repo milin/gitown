@@ -18,7 +18,8 @@ class CodeOwnersUpdater:
         files,
         owners,
         ownership_threshold=DEFAULT_OWNERSHIP_THRESHOLD,
-        codeowners_filename=DEFAULT_CODEOWNERS_FILE
+        codeowners_filename=DEFAULT_CODEOWNERS_FILE,
+        verbose=False
     ):
         self.files = files,
         self.original_codeowner_data = {}
@@ -27,6 +28,7 @@ class CodeOwnersUpdater:
         self.owners = owners
         self.ownership_threshold = ownership_threshold
         self.codeowners_file = codeowners_filename
+        self.verbose = verbose
 
         with open(self.codeowners_file, newline='') as csvfile:
             reader = csv.reader(csvfile, delimiter=' ')
@@ -66,6 +68,10 @@ class CodeOwnersUpdater:
                 writer = csv.writer(csvfile, delimiter=' ', lineterminator='\n')
                 for key, value in updated_data.items():
                     writer.writerow([key] + value)
+
+            if self.verbose:
+                print(f"updated data: {updated_data}")
+                print(f"original data: {self.original_codeowner_data}")
             self.updated = True
 
     def get_committer_line_frequency_percentage(self, committer_email, filename):
@@ -106,10 +112,12 @@ if __name__ == '__main__':
     parser.add_argument('filenames', nargs='+')
     parser.add_argument('--ownership_threshold')
     parser.add_argument('--codeowners_filename')
+    parser.add_argument('--verbose', '-v', action='count', default=0)
     args = parser.parse_args()
     files = args.filenames[0]
     ownership_threshold = args.ownership_threshold
     codeowners_filename = args.codeowners_filename
+    verbose = bool(args.verbose)
     try:
         owners_raw = pathlib.Path('.gitownrc').read_text('utf-8')
         owners = json.loads(owners_raw)
@@ -121,6 +129,7 @@ if __name__ == '__main__':
         files,
         owners,
         ownership_threshold=ownership_threshold or DEFAULT_OWNERSHIP_THRESHOLD,
-        codeowners_filename=codeowners_filename or DEFAULT_CODEOWNERS_FILE
+        codeowners_filename=codeowners_filename or DEFAULT_CODEOWNERS_FILE,
+        verbose=verbose
     )
     sys.exit(codeowners.main())
