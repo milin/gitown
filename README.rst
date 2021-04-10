@@ -25,6 +25,14 @@ Features
 --------
 
 * Keep your github CODEOWNERS_ file up to date.
+
+Why to keep CODEOWNERS_ file up to date?
+- Allows for automated code reviewing process and integrates with github auto selecting the reviewer most likely to know the most about the CL.
+- Can integrate into slack once code reviewer is auto assigned and helps manage code review process.
+
+
+Details
+-------
 * If a committer exceeds the ``ownership_threshold`` percentage in a file, then the committer is added to the ``CODEOWNERS`` file.
 * Default ``ownership_threshold`` is set to 25%. You can change it by passing ``--ownership_threshold``. Meaning, if a person has 25% of more changes in a file, he is considered a codeowner, and the CODEOWNER file is updated accordingly.
 * Can be used as a ``pre-commit`` hook.
