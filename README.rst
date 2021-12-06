@@ -38,7 +38,11 @@ Details
 * If a committer exceeds the ``ownership_threshold`` percentage in a file, then the committer is added to the ``CODEOWNERS`` file.
 * Default ``ownership_threshold`` is set to 25%. You can change it by passing ``--ownership_threshold``. Meaning, if a person has 25% of more changes in a file, he is considered a codeowner, and the CODEOWNER file is updated accordingly.
 * Can be used as a ``pre-commit`` hook.
-* You need to create a gitownrc_ file and have a mapping of github emails to github usernames. gitown reads that file and only those users are considered to be added to the ``CODEOWNERS`` file.*
+
+**IMPORTANT**
+
+* You need to create a gitownrc_ file and have a mapping of github emails to github usernames in order to use this tool.
+* `gitown` reads that file and only those users are considered to be added to the ``CODEOWNERS`` file.
 
 It is best used along with pre-commit_. You can use it along with pre-commit by adding the following hook in your ``.pre-commit-config.yaml`` file.
 
