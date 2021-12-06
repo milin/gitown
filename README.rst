@@ -27,8 +27,10 @@ Features
 * Keep your github CODEOWNERS_ file up to date.
 
 Why to keep CODEOWNERS_ file up to date?
-- Allows for automated code reviewing process and integrates with github auto selecting the reviewer most likely to know the most about the CL.
+
+- Allows for automated code reviewing process and integrates with github auto selecting the reviewer most likely to know the most about the change list.
 - Can integrate into slack once code reviewer is auto assigned and helps manage code review process.
+- Helps in introducing standard process during team code-reviews.
 
 
 Details
