@@ -5,4 +5,4 @@
 #
 # Order is important. The last matching pattern has the most precedence.
 
-.pre-commit-config.yaml milin
+.pre-commit-config.yaml @milin
