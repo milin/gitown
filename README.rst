@@ -50,7 +50,7 @@ It is best used along with pre-commit_. You can use it along with pre-commit by 
 
     repos:
     - repo:  https://github.com/milin/gitown
-      rev: v0.1.6
+      rev: v0.1.7
       hooks:
       - id:  gitown
         args: ['--ownership_threshold=25', '--codeowners_filename=CODEOWNERS']  # Optional
