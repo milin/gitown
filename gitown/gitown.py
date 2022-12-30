@@ -81,7 +81,7 @@ class CodeOwnersUpdater:
         total_lines_by_committer = blame_file_content.count(committer_email)
         frequency_percentage = 0
         if total_lines:
-           return (total_lines_by_committer / total_lines) * 100
+            return (total_lines_by_committer / total_lines) * 100
         return frequency_percentage
 
     @cache
