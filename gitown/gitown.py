@@ -21,7 +21,7 @@ class CodeOwnersUpdater:
         codeowners_filename=DEFAULT_CODEOWNERS_FILE,
         verbose=False
     ):
-        self.files = files,
+        self.files = files
         self.original_codeowner_data = {}
         self.updated_codeowner_data = {}
         self.updated = False
@@ -115,7 +115,7 @@ def main():
     parser.add_argument('--codeowners_filename')
     parser.add_argument('--verbose', '-v', action='count', default=0)
     args = parser.parse_args()
-    files = args.filenames[0]
+    files = args.filenames
     ownership_threshold = int(args.ownership_threshold or DEFAULT_OWNERSHIP_THRESHOLD)
     codeowners_filename = args.codeowners_filename
     verbose = bool(args.verbose)
