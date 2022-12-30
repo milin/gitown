@@ -5,8 +5,6 @@
 
 import unittest
 
-from gitown import gitown
-
 
 class TestGitown(unittest.TestCase):
     """Tests for `gitown` package."""
